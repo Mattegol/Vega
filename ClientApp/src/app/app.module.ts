@@ -5,8 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import { MakeService } from './services/make.service';
-import { FeatureService } from './services/feature.service';
+import { VehicleService } from './services/vehicle.service';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -36,7 +35,7 @@ import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
       { path: 'vehicles/new', component: VehicleFormComponent }
     ])
   ],
-  providers: [MakeService, FeatureService],
+  providers: [VehicleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
