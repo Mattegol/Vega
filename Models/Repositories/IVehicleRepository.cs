@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace vega.Models.Repositories
 {
     public interface IVehicleRepository : IRepository<Vehicle>
     {
-         Vehicle GetVehicleWithFeatures(int id);
+         Task<Vehicle> GetVehicle(int id);
     }
 }

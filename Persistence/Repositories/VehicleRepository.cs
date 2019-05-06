@@ -18,9 +18,14 @@ namespace vega.Persistence.Repositories
             get { return _context as VegaDbContext; }
         } 
 
-        public Vehicle GetVehicleWithFeatures(int id)
+        public async Task<Vehicle> GetVehicle(int id)
         {
-            return VegaDbContext.Vehicles.Include(v => v.Features).SingleOrDefault(v => v.Id == id);
+            return await VegaDbContext.Vehicles
+                .Include(v => v.Features)
+                    .ThenInclude(vf => vf.Feature)
+                .Include(v => v.Model)
+                    .ThenInclude(m => m.Make)
+                .SingleOrDefaultAsync(v => v.Id == id);
         }
     }
 }
