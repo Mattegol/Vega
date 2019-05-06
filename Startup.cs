@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using vega.Models.Repositories;
 using vega.Persistence;
+using vega.Persistence.Repositories;
 
 namespace vega
 {
@@ -24,6 +26,7 @@ namespace vega
         [System.Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddAutoMapper();
 
             services.AddDbContext<VegaDbContext>(options => 
