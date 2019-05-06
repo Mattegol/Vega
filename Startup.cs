@@ -26,7 +26,9 @@ namespace vega
         [System.Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IVehicleRepository, VehicleRepository>();
+
             services.AddAutoMapper();
 
             services.AddDbContext<VegaDbContext>(options => 
