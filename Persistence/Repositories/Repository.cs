@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using vega.Models.Repositories;
 
 namespace vega.Persistence.Repositories
@@ -31,9 +32,9 @@ namespace vega.Persistence.Repositories
             return _context.Set<TEntity>().Where(predicate);
         }
 
-        public TEntity Get(int id)
+        public async Task<TEntity> Get(int id)
         {
-            return _context.Set<TEntity>().Find(id);
+            return await _context.Set<TEntity>().FindAsync(id);
         }
 
         public IEnumerable<TEntity> GetAll()
