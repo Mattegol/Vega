@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using vega.Models;
+using vega.Core.Models;
 using vega.Core.Repositories;
 
 namespace vega.Persistence.Repositories
