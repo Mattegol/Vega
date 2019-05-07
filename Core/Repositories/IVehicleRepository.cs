@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
+using vega.Models;
 
-namespace vega.Models.Repositories
+namespace vega.Core.Repositories
 {
     public interface IVehicleRepository : IRepository<Vehicle>
     {

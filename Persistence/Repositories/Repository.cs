@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using vega.Models.Repositories;
+using vega.Core.Repositories;
 
 namespace vega.Persistence.Repositories
 {

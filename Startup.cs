@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using vega.Models.Repositories;
+using vega.Core;
 using vega.Persistence;
 using vega.Persistence.Repositories;
+using vega.Core.Repositories;
 
 namespace vega
 {

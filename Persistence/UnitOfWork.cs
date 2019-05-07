@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
-using vega.Models.Repositories;
+using vega.Core;
+using vega.Core.Repositories;
+using vega.Persistence.Repositories;
 
 namespace vega.Persistence
 {
@@ -7,10 +9,11 @@ namespace vega.Persistence
     {
         private readonly VegaDbContext _context;
 
+        public IVehicleRepository Vehicles { get; private set; }
         
-
         public UnitOfWork(VegaDbContext context)
         {
+            Vehicles = new VehicleRepository(context);
             _context = context;
         }
 
