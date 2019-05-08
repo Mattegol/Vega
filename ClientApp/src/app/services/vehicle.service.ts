@@ -26,4 +26,8 @@ constructor(private http: Http) { }
     return this.http.get('/api/vehicles/' + id).pipe(map(res => res.json()));
   }
 
+  delete(id) {
+    return this.http.delete('/api/vehicles/' + id).pipe(map(res => res.json()));
+  }
+
 }
