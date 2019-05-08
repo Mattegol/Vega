@@ -1,5 +1,5 @@
 import * as Raven from 'raven-js';
-import { ErrorHandler, Inject, NgZone } from '@angular/core';
+import { ErrorHandler, Inject, NgZone, isDevMode } from '@angular/core';
 import { ToastyService } from 'ng2-toasty';
 
 export class AppErrorHandler implements ErrorHandler {
@@ -10,8 +10,6 @@ export class AppErrorHandler implements ErrorHandler {
     }
 
     handleError(error: any): void {
-        Raven.captureException(error.originalError || error);
-
         this.ngZone.run(() => {
             this.toastyService.error({
                 title: 'Error',
@@ -22,5 +20,10 @@ export class AppErrorHandler implements ErrorHandler {
               });
         });
 
+        if (!isDevMode()) {
+            Raven.captureException(error.originalError || error);
+        } else {
+            throw error;
+        }
     }
 }
