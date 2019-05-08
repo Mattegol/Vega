@@ -1,3 +1,4 @@
+import * as Raven from 'raven-js';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +16,10 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 import { AppErrorHandler } from './app.error-handler';
+
+Raven
+  .config('https://d1b0b1308f474d258b520352c4f37bc4@sentry.io/1455062')
+  .install();
 
 @NgModule({
    declarations: [
