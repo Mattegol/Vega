@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx'
+import { shareReplay } from 'rxjs/operators';
 import 'rxjs/add/Observable/forkJoin';
 import { SaveVehicle, Vehicle } from '../models/vehicle';
 
@@ -55,13 +56,13 @@ export class VehicleFormComponent implements OnInit {
       this.features = data[1];
       if (this.vehicle.id) {
        this.setVehicle(data[2]);
+       this.populateModels();
       }
     }, err => {
       if (err.status === 404) {
         this.router.navigate(['/home']);
       }
     });
-
   }
 
   private setVehicle(v: Vehicle) {
@@ -73,11 +74,14 @@ export class VehicleFormComponent implements OnInit {
     this.vehicle.features = _.pluck(v.features, 'id');
   }
 
-
   onMakeChange() {
+    this.populateModels();
+    delete this.vehicle.modelId;
+  }
+
+  private populateModels() {
     const selectedMake = this.makes.find(m => m.id === +this.vehicle.makeId);
     this.models = selectedMake ? selectedMake.models : [];
-    delete this.vehicle.modelId;
   }
 
   onFeatureToggle(featureId, $event) {
