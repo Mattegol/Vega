@@ -15,8 +15,7 @@ export class VehicleFormComponent implements OnInit {
     contact: {}
   };
 
-  constructor(
-    private vehicleService: VehicleService) { }
+  constructor(private vehicleService: VehicleService) { }
 
   ngOnInit() {
     this.vehicleService.getMakes().subscribe(makes =>
@@ -39,6 +38,10 @@ export class VehicleFormComponent implements OnInit {
       const index = this.vehicle.features.indexOf(featureId);
       this.vehicle.features.splice(index, 1);
     }
+  }
+
+  submit() {
+    this.vehicleService.create(this.vehicle).subscribe(x => console.log(x));
   }
 
 }

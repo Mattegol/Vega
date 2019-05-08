@@ -18,4 +18,8 @@ constructor(private http: Http) { }
               .pipe(map(res => res.json()));
   }
 
+  create(vehicle) {
+    return this.http.post('/api/vehicles', vehicle).pipe(map(res => res.json()));
+  }
+
 }
