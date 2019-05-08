@@ -22,4 +22,8 @@ constructor(private http: Http) { }
     return this.http.post('/api/vehicles', vehicle).pipe(map(res => res.json()));
   }
 
+  getVehicle(id) {
+    return this.http.get('/api/vehicles/' + id).pipe(map(res => res.json()));
+  }
+
 }

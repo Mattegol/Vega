@@ -40,7 +40,9 @@ Raven
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'vehicles/new', component: VehicleFormComponent }
+      { path: 'vehicles/new', component: VehicleFormComponent },
+      { path: 'vehicles/:id', component: VehicleFormComponent },
+      { path: 'home', component: HomeComponent }
     ])
   ],
   providers: [
