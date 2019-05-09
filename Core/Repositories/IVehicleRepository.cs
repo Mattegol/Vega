@@ -8,6 +8,6 @@ namespace vega.Core.Repositories
     {
          Task<Vehicle> GetVehicle(int id);
 
-         Task<IEnumerable<Vehicle>> GetVehicles(Filter filter);
+         Task<IEnumerable<Vehicle>> GetVehicles(VehicleQuery filter);
     }
 }
