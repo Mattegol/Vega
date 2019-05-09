@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using vega.Core.Models;
 using vega.Core.Repositories;
-
+using vega.Extensions;
 namespace vega.Persistence.Repositories
 {
     public class VehicleRepository : Repository<Vehicle>, IVehicleRepository
@@ -58,19 +58,11 @@ namespace vega.Persistence.Repositories
                 ["id"] = v => v.Id
             };
            
-            query = ApplyOrdering(queryObj, query, columnsMap);
+            query = query.ApplyOrdering(queryObj, columnsMap);
 
             return await query.ToListAsync();     
         }
 
-        private IQueryable<Vehicle> ApplyOrdering(VehicleQuery queryObj, IQueryable<Vehicle> query, Dictionary<string, Expression<Func<Vehicle, object>>> columnsMap)
-        {
-            if (queryObj.IsSortAscending) {
-                return query = query.OrderBy(columnsMap[queryObj.SortBy]);
-            }
-            else {
-                return query = query.OrderByDescending(columnsMap[queryObj.SortBy]);
-            }
-        }
+       
     }
 }
