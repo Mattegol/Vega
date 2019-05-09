@@ -50,7 +50,6 @@ namespace vega.Persistence.Repositories
                 query = query.Where(v => v.ModelId == queryObj.ModelId);
             }
 
-            
             var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>>>()
             {
                 ["make"] = v => v.Model.Make.Name,
@@ -59,14 +58,19 @@ namespace vega.Persistence.Repositories
                 ["id"] = v => v.Id
             };
            
-            if (queryObj.IsSortAscending) {
-                query = query.OrderBy(columnsMap[queryObj.SortBy]);
-            }
-            else {
-                query = query.OrderByDescending(columnsMap[queryObj.SortBy]);
-            }
+            query = ApplyOrdering(queryObj, query, columnsMap);
 
             return await query.ToListAsync();     
+        }
+
+        private IQueryable<Vehicle> ApplyOrdering(VehicleQuery queryObj, IQueryable<Vehicle> query, Dictionary<string, Expression<Func<Vehicle, object>>> columnsMap)
+        {
+            if (queryObj.IsSortAscending) {
+                return query = query.OrderBy(columnsMap[queryObj.SortBy]);
+            }
+            else {
+                return query = query.OrderByDescending(columnsMap[queryObj.SortBy]);
+            }
         }
     }
 }
