@@ -43,6 +43,11 @@ namespace vega.Persistence.Repositories
                 query = query.Where(v => v.Model.MakeId == filter.MakeId);
             }
 
+            if(filter.ModelId.HasValue)
+            {
+                query = query.Where(v => v.ModelId == filter.ModelId);
+            }
+
             return await query.ToListAsync();
                 
         }
