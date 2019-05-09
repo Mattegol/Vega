@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using vega.Controllers.Resources;
 using vega.Core.Models;
 using vega.Core;
+using System.Collections.Generic;
 
 namespace vega.Controllers
 {
@@ -94,6 +95,14 @@ namespace vega.Controllers
             var vehicleResource = _mapper.Map<Vehicle, VehicleResource>(vehicle);
 
             return Ok(vehicleResource);
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<VehicleResource>> GetVehicles()
+        {
+            var vehicles = await _unitOfWork.Vehicles.GetVehicles();
+
+            return _mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>>(vehicles); 
         }
 
     }

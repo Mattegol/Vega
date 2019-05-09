@@ -14,8 +14,7 @@ constructor(private http: Http) { }
   }
 
   getFeatures() {
-    return this.http.get('/api/features')
-              .pipe(map(res => res.json()));
+    return this.http.get('/api/features').pipe(map(res => res.json()));
   }
 
   create(vehicle) {
@@ -24,6 +23,10 @@ constructor(private http: Http) { }
 
   getVehicle(id) {
     return this.http.get('/api/vehicles/' + id).pipe(map(res => res.json()));
+  }
+
+  getVehicles() {
+    return this.http.get('/api/vehicles').pipe(map(res => res.json()));
   }
 
   delete(id) {

@@ -16,6 +16,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 import { AppErrorHandler } from './app.error-handler';
+import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 
 Raven
   .config('https://d1b0b1308f474d258b520352c4f37bc4@sentry.io/1455062')
@@ -28,7 +29,8 @@ Raven
       HomeComponent,
       CounterComponent,
       FetchDataComponent,
-      VehicleFormComponent
+      VehicleFormComponent,
+      VehicleListComponent
    ],
    imports: [
       BrowserModule,
@@ -37,17 +39,18 @@ Raven
       FormsModule,
       ToastyModule.forRoot(),
       RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'vehicles/new', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: VehicleFormComponent },
+      { path: 'vehicles', component: VehicleListComponent },
       { path: 'home', component: HomeComponent }
     ])
   ],
   providers: [
    { provide: ErrorHandler, useClass: AppErrorHandler },
    VehicleService],
-  bootstrap: [AppComponent]
+bootstrap: [AppComponent]
 })
 export class AppModule { }
