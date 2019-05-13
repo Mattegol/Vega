@@ -27,7 +27,7 @@ constructor(private http: Http) { }
   }
 
   getVehicle(id) {
-    return this.http.get(this.vehiclesEndpoint + id).pipe(map(res => res.json()));
+    return this.http.get(this.vehiclesEndpoint + '/' + id).pipe(map(res => res.json()));
   }
 
   getVehicles(filter) {
@@ -40,7 +40,7 @@ constructor(private http: Http) { }
     for (const property in obj) {
       const value = obj[property];
       if (value != null && value !== undefined) {
-        parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value))
+        parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
       }
     }
 

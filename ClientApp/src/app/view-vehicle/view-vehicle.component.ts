@@ -30,6 +30,7 @@ export class ViewVehicleComponent implements OnInit {
       .subscribe(
         v => this.vehicle = v,
         err => {
+          console.log('Error');
           if (err.status === 404) {
             this.router.navigate(['/vehicles']);
             return;
