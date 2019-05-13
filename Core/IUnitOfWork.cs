@@ -7,6 +7,8 @@ namespace vega.Core
     {
         IVehicleRepository Vehicles { get; }
 
+        IPhotoRepository Photos { get; }
+
         Task CompleteAsync();
     }
 }
