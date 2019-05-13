@@ -20,6 +20,7 @@ import { AppErrorHandler } from './app.error-handler';
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { PaginationComponent } from './Shared/pagination.component';
 import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
+import { PhotoService } from './services/photo.service';
 
 Raven
   .config('https://d1b0b1308f474d258b520352c4f37bc4@sentry.io/1455062')
@@ -56,7 +57,7 @@ Raven
    ],
    providers: [
       { provide: ErrorHandler, useClass: AppErrorHandler },
-      VehicleService],
+      VehicleService, PhotoService],
       bootstrap: [AppComponent]
 })
 export class AppModule { }
