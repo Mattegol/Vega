@@ -19,6 +19,7 @@ import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 import { AppErrorHandler } from './app.error-handler';
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { PaginationComponent } from './Shared/pagination.component';
+import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
 
 Raven
   .config('https://d1b0b1308f474d258b520352c4f37bc4@sentry.io/1455062')
@@ -33,7 +34,8 @@ Raven
       FetchDataComponent,
       VehicleFormComponent,
       VehicleListComponent,
-      PaginationComponent
+      PaginationComponent,
+      ViewVehicleComponent
    ],
    imports: [
       BrowserModule,
@@ -43,18 +45,18 @@ Raven
       AngularFontAwesomeModule,
       ToastyModule.forRoot(),
       RouterModule.forRoot([
-      { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'vehicles/new', component: VehicleFormComponent },
-      { path: 'vehicles/:id', component: VehicleFormComponent },
-      { path: 'vehicles', component: VehicleListComponent },
-      { path: 'home', component: HomeComponent }
-    ])
-  ],
-  providers: [
-   { provide: ErrorHandler, useClass: AppErrorHandler },
-   VehicleService],
-bootstrap: [AppComponent]
+         { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
+         { path: 'vehicles/new', component: VehicleFormComponent },
+         { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+         { path: 'vehicles/:id', component: ViewVehicleComponent },
+         { path: 'vehicles', component: VehicleListComponent },
+         { path: 'home', component: HomeComponent },
+         { path: '**', redirectTo: 'home' }
+      ])
+   ],
+   providers: [
+      { provide: ErrorHandler, useClass: AppErrorHandler },
+      VehicleService],
+      bootstrap: [AppComponent]
 })
 export class AppModule { }
