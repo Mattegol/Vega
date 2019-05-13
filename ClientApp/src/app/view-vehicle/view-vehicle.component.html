@@ -26,6 +26,12 @@
             <li>Contact Phone: {{ vehicle.contact.phone }}</li>
             <li>Contact Email: {{ vehicle.contact.email }}</li>
           </ul>
+          <br/>
+          <p>
+            <a class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
+            <button class="btn btn-danger" (click)="delete()">Delete</button>
+            <a class="btn btn-default" [routerLink]="['/vehicles']">View All Vehicles</a>
+          </p>
         </div>
         <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="photos-tab">
           <h2>Photos</h2>
