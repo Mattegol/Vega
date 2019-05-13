@@ -11,6 +11,7 @@ using vega.Core;
 using vega.Persistence;
 using vega.Persistence.Repositories;
 using vega.Core.Repositories;
+using vega.Core.Models;
 
 namespace vega
 {
@@ -27,6 +28,7 @@ namespace vega
         [System.Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IVehicleRepository, VehicleRepository>();
 
