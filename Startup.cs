@@ -12,6 +12,7 @@ using vega.Persistence;
 using vega.Persistence.Repositories;
 using vega.Core.Repositories;
 using vega.Core.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace vega
 {
@@ -40,6 +41,17 @@ namespace vega
             services.AddMvc()
                 .AddNewtonsoftJson();
 
+            // 1. Add Authentication Services
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://mattegol.eu.auth0.com/";
+                options.Audience = "https://api.vega.com";
+            });
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -64,6 +76,9 @@ namespace vega
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            // 2. Enable authentication middleware
+            app.UseAuthentication();    
 
             app.UseMvc(routes =>
             {
