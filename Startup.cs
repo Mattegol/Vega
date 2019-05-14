@@ -13,6 +13,7 @@ using vega.Persistence.Repositories;
 using vega.Core.Repositories;
 using vega.Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace vega
 {
@@ -74,7 +75,12 @@ namespace vega
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+            var provider = new FileExtensionContentTypeProvider();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = provider // this is not set by default
+            });
             app.UseSpaStaticFiles();
 
             // 2. Enable authentication middleware

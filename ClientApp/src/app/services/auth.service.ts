@@ -15,7 +15,7 @@ export class AuthService {
     clientID: 't2TdmklnoCmWGkIf1M1JKjDyov9XJkAr',
     domain: 'mattegol.eu.auth0.com',
     responseType: 'token id_token',
-    redirectUri: 'http://localhost:3000/callback',
+    redirectUri: 'https://localhost:5001/callback',
     scope: 'openid'
   });
 
@@ -35,6 +35,24 @@ export class AuthService {
 
   public login(): void {
     this.auth0.authorize();
+  }
+
+  public logout(): void {
+    // Remove tokens and expiry time
+    this._accessToken = '';
+    this._idToken = '';
+    this._expiresAt = 0;
+
+    this.auth0.logout({
+      returnTo: window.location.origin
+    });
+  }
+
+  public isAuthenticated(): boolean {
+    // Check whether the current time is past the
+    const date = Date.now();
+    // access token's expiry time
+    return this._accessToken && date < this._expiresAt;
   }
 
 }
