@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
 import { VehicleService } from '../services/vehicle.service';
 import { PhotoService } from '../services/photo.service';
+import { ProgressService } from '../services/progress.service';
 
 @Component({
   templateUrl: './view-vehicle.component.html'
@@ -17,6 +18,7 @@ export class ViewVehicleComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toasty: ToastyService,
+    private progressService: ProgressService,
     private photoService: PhotoService,
     private vehicleService: VehicleService) {
 
@@ -54,6 +56,10 @@ export class ViewVehicleComponent implements OnInit {
 
   uploadPhoto() {
     const nativeElement: HTMLInputElement = this.fileInput.nativeElement;
+
+    this.progressService.uploadProgress
+      .subscribe(progress => console.log(progress));
+
     this.photoService.upload(this.vehicleId, nativeElement.files[0])
       .subscribe(photo => {
         this.photos.push(photo);
