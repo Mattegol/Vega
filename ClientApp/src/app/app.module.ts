@@ -56,14 +56,18 @@ Raven
          { path: 'vehicles/:id', component: ViewVehicleComponent },
          { path: 'vehicles', component: VehicleListComponent },
          { path: 'profile', component: ProfileComponent },
+         { path: 'home', component: HomeComponent },
          { path: '**', redirectTo: 'home' }
       ])
    ],
    providers: [
       { provide: ErrorHandler, useClass: AppErrorHandler },
-      VehicleService, AuthService],
-      bootstrap: [
-         AppComponent
-   ]
+      { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
+      VehicleService,
+      AuthService,
+      PhotoService,
+      ProgressService
+   ],
+      bootstrap: [AppComponent]
 })
 export class AppModule { }
