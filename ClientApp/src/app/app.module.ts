@@ -23,6 +23,7 @@ import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
 import { PhotoService } from './services/photo.service';
 import { BrowserXhrWithProgress, ProgressService } from './services/progress.service';
 import { AuthService } from './services/auth.service';
+import { ProfileComponent } from './profile/profile.component';
 
 Raven
   .config('https://d1b0b1308f474d258b520352c4f37bc4@sentry.io/1455062')
@@ -38,7 +39,8 @@ Raven
       VehicleFormComponent,
       VehicleListComponent,
       PaginationComponent,
-      ViewVehicleComponent
+      ViewVehicleComponent,
+      ProfileComponent
    ],
    imports: [
       BrowserModule,
@@ -53,18 +55,15 @@ Raven
          { path: 'vehicles/edit/:id', component: VehicleFormComponent },
          { path: 'vehicles/:id', component: ViewVehicleComponent },
          { path: 'vehicles', component: VehicleListComponent },
-         { path: 'home', component: HomeComponent },
+         { path: 'profile', component: ProfileComponent },
          { path: '**', redirectTo: 'home' }
       ])
    ],
    providers: [
       { provide: ErrorHandler, useClass: AppErrorHandler },
-      { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
-      AuthService,
-      VehicleService,
-      PhotoService,
-      ProgressService
-   ],
-      bootstrap: [AppComponent]
+      VehicleService, AuthService],
+      bootstrap: [
+         AppComponent
+   ]
 })
 export class AppModule { }

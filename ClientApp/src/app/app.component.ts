@@ -8,6 +8,7 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'app';
+  profile: any;
 
   constructor(public auth: AuthService) {
     auth.handleAuthentication();

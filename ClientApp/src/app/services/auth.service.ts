@@ -8,7 +8,7 @@ import * as auth0 from 'auth0-js';
 (window as any).global = window;
 @Injectable()
 export class AuthService {
-
+  userProfile: any;
   private _idToken: string;
   private _accessToken: string;
   private _expiresAt: number;
@@ -18,10 +18,11 @@ export class AuthService {
     domain: 'mattegol.eu.auth0.com',
     responseType: 'token id_token',
     redirectUri: 'https://localhost:5001/callback',
-    scope: 'openid'
+    scope: 'openid profile'
   });
 
   constructor(public router: Router) {
+   // this.profile = JSON.parse(localStorage.getItem('profile'));
   }
 
   get accessToken(): string {
@@ -40,11 +41,10 @@ export class AuthService {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.localLogin(authResult);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/vehicles']);
       } else if (err) {
-        this.router.navigate(['/home']);
-        console.log(err);
-        alert(`Error: ${err.error}. Check the console for further details.`);
+        this.router.navigate(['/vehicles']);
+        console.log(`Error: ${err.error}. Check the console for further details.`);
       }
     });
   }
@@ -55,6 +55,21 @@ export class AuthService {
     this._accessToken = authResult.accessToken;
     this._idToken = authResult.idToken;
     this._expiresAt = expiresAt;
+  }
+
+  public getProfile(cb): void {
+    if (!this._accessToken) {
+      throw new Error('Access Token must exist to fetch profile');
+    }
+
+    const self = this;
+    this.auth0.client.userInfo(this._accessToken, (err, profile) => {
+      if (profile) {
+        self.userProfile = profile;
+        console.log(this.userProfile);
+      }
+      cb(err, profile);
+    });
   }
 
   public renewTokens(): void {
@@ -69,9 +84,6 @@ export class AuthService {
   }
 
   public logout(): void {
-    console.log(this._accessToken);
-    console.log(this._idToken);
-    console.log(this._expiresAt);
     // Remove tokens and expiry time
     this._accessToken = '';
     this._idToken = '';
