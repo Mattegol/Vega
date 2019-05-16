@@ -26,7 +26,6 @@ export class AuthService {
   });
 
   constructor(public router: Router) {
-    console.log(this.requestedScopes);
   }
 
   get accessToken(): string {
@@ -68,7 +67,6 @@ export class AuthService {
 
   public userHasScopes(scopes: Array<string>): boolean {
     const grantedScopes = JSON.parse(this._scopes).split(' ');
-    console.log('Granted Scopes:', grantedScopes);
     return scopes.every(scope => grantedScopes.includes(scope));
   }
 

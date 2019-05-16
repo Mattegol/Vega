@@ -25,6 +25,8 @@ import { BrowserXhrWithProgress, ProgressService } from './services/progress.ser
 import { AuthService } from './services/auth.service';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminComponent } from './admin/admin.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { ScopeGuardService } from './services/scope-guard.service';
 
 Raven
   .config('https://d1b0b1308f474d258b520352c4f37bc4@sentry.io/1455062')
@@ -57,8 +59,8 @@ Raven
          { path: 'vehicles/edit/:id', component: VehicleFormComponent },
          { path: 'vehicles/:id', component: ViewVehicleComponent },
          { path: 'vehicles', component: VehicleListComponent },
-         { path: 'admin', component: AdminComponent },
-         { path: 'profile', component: ProfileComponent },
+         { path: 'admin', component: AdminComponent, canActivate: [ ScopeGuardService ], data: { expectedScopes: ['write:admin']} },
+         { path: 'profile', component: ProfileComponent, canActivate: [ AuthGuardService ] },
          { path: 'home', component: HomeComponent },
          { path: '**', redirectTo: 'home' }
       ])
@@ -69,7 +71,9 @@ Raven
       VehicleService,
       AuthService,
       PhotoService,
-      ProgressService
+      ProgressService,
+      AuthGuardService,
+      ScopeGuardService
    ],
       bootstrap: [AppComponent]
 })
