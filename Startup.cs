@@ -14,11 +14,14 @@ using vega.Core.Repositories;
 using vega.Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.AspNetCore.Http;
 
 namespace vega
 {
     public class Startup
     {
+        private string _SecretConnString = null;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,6 +33,8 @@ namespace vega
         [System.Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
+            _SecretConnString = Configuration["ConnectionStrings:DefaultConnection"];
+
             services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IVehicleRepository, VehicleRepository>();
@@ -39,7 +44,7 @@ namespace vega
             services.AddAutoMapper();
 
             services.AddDbContext<VegaDbContext>(options => 
-                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                        options.UseSqlServer(_SecretConnString);
             
             services.AddMvc()
                 .AddNewtonsoftJson();
@@ -60,11 +65,18 @@ namespace vega
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // var result = string.IsNullOrEmpty(_SecretConnString) ? "NULL" : _SecretConnString;
+            //     app.Run(async (context) =>
+            //     {
+            //         await context.Response.WriteAsync($"Secret is {result}");
+            //     });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
