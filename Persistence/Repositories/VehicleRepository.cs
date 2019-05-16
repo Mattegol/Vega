@@ -38,8 +38,6 @@ namespace vega.Persistence.Repositories
             var query = VegaDbContext.Vehicles
                 .Include(v => v.Model)
                     .ThenInclude(m => m.Make)
-                .Include(v => v.Features)
-                    .ThenInclude(vf => vf.Feature)
                 .AsQueryable();
 
             if(queryObj.MakeId.HasValue)

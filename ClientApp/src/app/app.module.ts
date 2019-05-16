@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ToastyModule } from 'ng2-toasty';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { ChartsModule } from 'ng2-charts';
 
 import { VehicleService } from './services/vehicle.service';
 
@@ -52,6 +53,7 @@ Raven
       HttpModule,
       FormsModule,
       AngularFontAwesomeModule,
+      ChartsModule,
       ToastyModule.forRoot(),
       RouterModule.forRoot([
          { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
