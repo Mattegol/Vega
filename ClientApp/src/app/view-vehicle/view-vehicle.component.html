@@ -29,14 +29,14 @@
           </ul>
           <br/>
           <p>
-            <a class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
-            <button class="btn btn-danger" (click)="delete()">Delete</button>
+            <a class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]" *ngIf="auth.isAuthenticated()">Edit</a>
+            <button class="btn btn-danger" (click)="delete()" *ngIf="auth.isAuthenticated()">Delete</button>
             <a class="btn btn-default" [routerLink]="['/vehicles']">View All Vehicles</a>
           </p>
         </div>
         <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="photos-tab">
           <h2>Photos</h2>
-          <input type="file" class="form-control-file" (change)="uploadPhoto()" #fileInput>
+          <input type="file" class="form-control-file" (change)="uploadPhoto()" #fileInput *ngIf="auth.isAuthenticated()">
           <div class="progress" *ngIf="progress && progress.percentage < 100">
             <div class="progress-bar" [style.width]="progress.percentage + '%'">
               <span class="sr-only">{{ progress.percentage }}% Complete</span>

@@ -4,6 +4,7 @@ import { ToastyService } from 'ng2-toasty';
 import { VehicleService } from '../services/vehicle.service';
 import { PhotoService } from '../services/photo.service';
 import { ProgressService } from '../services/progress.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   templateUrl: './view-vehicle.component.html'
@@ -16,6 +17,7 @@ export class ViewVehicleComponent implements OnInit {
   progress: any;
 
   constructor(
+    private auth: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private toasty: ToastyService,
