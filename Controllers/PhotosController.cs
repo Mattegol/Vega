@@ -26,17 +26,21 @@ namespace vega.Controllers
 
         private readonly PhotoSettings _photoSettings;
 
+        private readonly IPhotoService _photoService;
+
         public PhotosController(IHostingEnvironment host, 
             IVehicleRepository repository, 
             IUnitOfWork unitOfWork, 
             IMapper mapper,
-            IOptionsSnapshot<PhotoSettings> options)
+            IOptionsSnapshot<PhotoSettings> options,
+            IPhotoService photoService)
         {
             _photoSettings = options.Value;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _repository = repository;
             _host = host;
+            _photoService = photoService;
         }
 
         [HttpGet]
@@ -58,22 +62,7 @@ namespace vega.Controllers
             if (!_photoSettings.IsSupported(file.FileName)) return BadRequest("Invalid file type.");
 
             var uploadsFolderPath = Path.Combine(_host.WebRootPath, "uploads");
-            if (!Directory.Exists(uploadsFolderPath))
-            {
-                Directory.CreateDirectory(uploadsFolderPath);
-            }
-
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-            var filePath = Path.Combine(uploadsFolderPath, fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            var photo = new Photo { FileName = fileName };
-            vehicle.Photos.Add(photo);
-            await _unitOfWork.CompleteAsync();
+            var photo= await _photoService.UploadPhoto(vehicle, file, uploadsFolderPath);
 
             return Ok(_mapper.Map<Photo, PhotoResource>(photo));
         }
