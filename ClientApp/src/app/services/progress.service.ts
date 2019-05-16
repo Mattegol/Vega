@@ -44,6 +44,6 @@ export class BrowserXhrWithProgress extends BrowserXhr {
         return {
             total: event.total,
             percentage: Math.round(event.loaded / event.total * 100)
-        }
+        };
     }
 }
