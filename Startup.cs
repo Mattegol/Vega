@@ -44,7 +44,7 @@ namespace vega
             services.AddAutoMapper();
 
             services.AddDbContext<VegaDbContext>(options => 
-                        options.UseSqlServer(_SecretConnString);
+                        options.UseSqlServer(_SecretConnString));
             
             services.AddMvc()
                 .AddNewtonsoftJson();
