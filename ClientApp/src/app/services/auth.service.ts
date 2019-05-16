@@ -9,6 +9,10 @@ import * as auth0 from 'auth0-js';
 @Injectable()
 export class AuthService {
   userProfile: any;
+
+  private _scopes: string;
+  requestedScopes = 'openid profile read:admin write:admin';
+
   private _idToken: string;
   private _accessToken: string;
   private _expiresAt: number;
@@ -18,11 +22,11 @@ export class AuthService {
     domain: 'mattegol.eu.auth0.com',
     responseType: 'token id_token',
     redirectUri: 'https://localhost:5001/callback',
-    scope: 'openid profile'
+    scope: this.requestedScopes
   });
 
   constructor(public router: Router) {
-   // this.profile = JSON.parse(localStorage.getItem('profile'));
+    console.log(this.requestedScopes);
   }
 
   get accessToken(): string {
@@ -50,11 +54,22 @@ export class AuthService {
   }
 
   private localLogin(authResult): void {
+    // const scopes = authResult.scope || this.requestedScopes || '';
+    const scopes = this.requestedScopes || '';
+
     // Set the time that the access token will expire at
     const expiresAt = (authResult.expiresIn * 1000) + Date.now();
     this._accessToken = authResult.accessToken;
     this._idToken = authResult.idToken;
     this._expiresAt = expiresAt;
+
+    this._scopes = JSON.stringify(scopes);
+  }
+
+  public userHasScopes(scopes: Array<string>): boolean {
+    const grantedScopes = JSON.parse(this._scopes).split(' ');
+    console.log('Granted Scopes:', grantedScopes);
+    return scopes.every(scope => grantedScopes.includes(scope));
   }
 
   public getProfile(cb): void {
@@ -66,7 +81,6 @@ export class AuthService {
     this.auth0.client.userInfo(this._accessToken, (err, profile) => {
       if (profile) {
         self.userProfile = profile;
-        console.log(this.userProfile);
       }
       cb(err, profile);
     });
@@ -88,6 +102,7 @@ export class AuthService {
     this._accessToken = '';
     this._idToken = '';
     this._expiresAt = 0;
+    this.userProfile = null;
 
     this.auth0.logout({
       returnTo: window.location.origin
